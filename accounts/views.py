@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
+from django.contrib.messages import ERROR, SUCCESS
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import update_session_auth_hash
 from . models import *
@@ -17,7 +18,7 @@ class Login(View):
             auth.login(request,user)
             return redirect('/')
         else:
-            messages.error(request,'Username/Password is incorrect')
+            messages.add_message(request, level=ERROR, message='Username/Password is incorrect')
             return redirect('login')
 
     def get(self, request):
@@ -36,16 +37,16 @@ class Register(View):
 
         if password1==password2:
             if User.objects.filter(username=username).exists():
-                messages.info(request,'username already exist')
+                messages.add_message(request, level=ERROR, message='Username already exists')
             elif User.objects.filter(email=email).exists():
-                messages.info(request,'email already exist')
+                messages.add_message(request, level=ERROR, message='Email already exists')
             else:        
                 user = User.objects.create_user(username = username, first_name= first_name, last_name= last_name, email=email,password=password1)
                 user.save()
-                messages.info(request,'User created')
+                messages.add_message(request, level=SUCCESS, message='User created')
                 return redirect('login')
         else:
-            messages.info(request, 'Password not match')
+            messages.add_message(request, level=ERROR, message='Password doesn\'t match')
         return redirect('register')                 
 
     def get(self, request):
@@ -69,17 +70,21 @@ class RegisterCinema(View):
 
         if password1==password2:
             if User.objects.filter(username=username).exists():
-                messages.info(request,'username already exist')
+                messages.add_message(request, level=ERROR, message='Username already exists')
+                
             elif User.objects.filter(email=email).exists():
-                messages.info(request,'email already exist')
+                messages.add_message(request, level=ERROR, message='Email already exists')
+                
             else:
                 user = User.objects.create_user(username = username, first_name= first_name, last_name= last_name, email=email,password=password1)
                 cin_user = Cinema(cinema_name = cinema_name, phoneno = phone, city = city, address = address, user = user)
                 cin_user.save()
-                messages.info(request,'User created')
+                messages.add_message(request, level=SUCCESS, message='User created')
+                
                 return redirect('login')
         else:
-            messages.info(request, 'Password not match')
+            messages.add_message(request, level=ERROR, message='Password doesn\'t match')
+            
         return redirect('register_cinema')     
                     
     def get(self, request):
@@ -98,10 +103,10 @@ class Profile(View):
         user = User.objects.get(pk = u.pk)        
             
         if User.objects.filter(username=username).exclude(pk=u.pk).exists():
-            messages.error(request,'Username already exists')
+            messages.add_message(request, level=ERROR, message='Username already exists')
         
         elif User.objects.filter(email=email).exclude(pk=u.pk).exists():
-                messages.error(request,'Email already exists')
+            messages.add_message(request, level=ERROR, message='Email already exists')
         
         elif user.check_password(old):
             user.username = username
@@ -113,9 +118,10 @@ class Profile(View):
             #update session
             update_session_auth_hash(request, user)
 
-            messages.success(request,'Profile updated')
+            messages.add_message(request, level=SUCCESS, message='Profile updated')
+            
         else:
-            messages.error(request,'Wrong Old Password')
+            messages.add_message(request, level=ERROR, message='Wrong Old Password')
             
         return redirect('profile')
     
@@ -135,7 +141,8 @@ class AddShows(View):
 
         show = Shows(cinema_id = i, movie_id = movie, date = date, time = time, price = price)
         show.save()
-        messages.success(request,'Show Added')
+        messages.add_message(request, level=SUCCESS, message='Show Added')
+        
         return redirect('add_shows')
 
     def get(self, request):  

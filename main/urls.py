@@ -10,5 +10,7 @@ urlpatterns=[
     path('seat/<int:id>',views.seat,name='seat'),
     path('booked',views.Booked.as_view(), name='booked'),
     path('ticket/<int:id>',views.ticket,name='ticket'),
+    path('dummy/',views.dummy, name='dummy'),
+    
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

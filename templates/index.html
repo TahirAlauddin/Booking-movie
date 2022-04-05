@@ -39,17 +39,17 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-10 offset-2 m-5">
-                    <h1>Now Showcasing</h1>
+                    <h1>Now Showing</h1>
                 </div>
             </div>
             <div class="row">
 
                 {% for movie in movies %}
-                <div class="col-12 col-md-6 col-lg-4 mb-5">
+                <div class="col-12 col-md-6 col-lg-4 mb-5 card-custom" style="border-radius:25px;overflow:hidden">
                     <a href="/movies/{{movie.pk}}">
-                        <div class="card shadow" style="width: 18rem; margin:0px auto;">
+                        <div class="card shadow card-custom" style="width: 18rem; margin:0px auto;">
                             <img src="{{ movie.movie_poster.url }}" class="card-img-top" height="380px">
-                            <div class="card-body">
+                            <div class="card-body card-custom">
                                 <h4 class="card-title text-center">{{ movie.movie_name }}</h4>
                             </div>
                         </div>

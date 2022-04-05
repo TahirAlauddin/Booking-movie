@@ -2,6 +2,8 @@ from django.shortcuts import render
 from accounts.models import *
 from django.http import HttpResponseRedirect, HttpResponse
 from django.views import View
+from django.contrib import messages
+from django.contrib.messages import SUCCESS 
 
 def index(request):
     movies = Movie.objects.all()
@@ -42,3 +44,7 @@ class Booked(View):
 def ticket(request, id):
     ticket = Bookings.objects.get(id=id)
     return render(request,"ticket.html", {'ticket':ticket})
+
+def dummy(request):
+    messages.add_message(request, level=SUCCESS, message="here we are")
+    return render(request, 'dummy.html')
