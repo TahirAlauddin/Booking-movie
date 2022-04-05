@@ -4,10 +4,11 @@ from django.contrib.auth.models import User, auth
 from django.contrib.auth import update_session_auth_hash
 from . models import *
 from django.db.models import Sum
+from django.views import View
 
 
-def login(request):
-    if request.method=='POST':
+class Login(View):
+    def post(self, request):
         username = request.POST['username']
         password = request.POST['password']
         user = auth.authenticate(username= username, password= password)
@@ -18,13 +19,14 @@ def login(request):
         else:
             messages.error(request,'Username/Password is incorrect')
             return redirect('login')
-    else:
+
+    def get(self, request):
         return render(request,"login.html")
 
 
-def register(request):
+class Register(View):
 
-    if request.method == 'POST':
+    def post(self, request):
         username = request.POST['username']
         first_name = request.POST['firstname']
         last_name = request.POST['lastname']
@@ -45,13 +47,14 @@ def register(request):
         else:
             messages.info(request, 'Password not match')
         return redirect('register')                 
-    else:
+
+    def get(self, request):
         return render(request,"register.html")
 
 
-def register_cinema(request):
+class RegisterCinema(View):
 
-    if request.method == 'POST':
+    def post(self, request):
         username = request.POST['username']
         first_name = request.POST['firstname']
         last_name = request.POST['lastname']
@@ -77,20 +80,18 @@ def register_cinema(request):
                 return redirect('login')
         else:
             messages.info(request, 'Password not match')
-        return redirect('register_cinema')                 
-    else:
+        return redirect('register_cinema')     
+                    
+    def get(self, request):
         return render(request,"register_cinema.html")
 
-def logout(request):
-    auth.logout(request)
-    return redirect('/')
+class Profile(View):
 
-def profile(request):
-    u = request.user
-    if request.method == 'POST':
+    def post(self, request):
+        u = request.user
         username = request.POST['username']
-        first_name = request.POST['fn']
-        last_name = request.POST['ln']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
         email = request.POST['email']
         old = request.POST['old']
         new = request.POST['new']
@@ -118,9 +119,34 @@ def profile(request):
             
         return redirect('profile')
     
-    else:
+    def get(self, request):
         user = request.user
         return render(request,"profile.html")
+
+class AddShows(View):
+
+    def post(self, request):
+        user = request.user
+        movie = request.POST['movie']
+        time = request.POST['time']
+        date = request.POST['date']
+        price = request.POST['price']
+        i = user.cinema.pk
+
+        show = Shows(cinema_id = i, movie_id = movie, date = date, time = time, price = price)
+        show.save()
+        messages.success(request,'Show Added')
+        return redirect('add_shows')
+
+    def get(self, request):  
+        user = request.user  
+        movies = Movie.objects.all()
+        shows = Shows.objects.filter(cinema=user.cinema)
+        data = {
+            'movies':movies,
+            'shows':shows
+        }
+        return render(request,"add_shows.html", data)
 
 def bookings(request):
     user = request.user
@@ -139,26 +165,7 @@ def earnings(request):
     total = Bookings.objects.filter(shows__cinema=user.cinema).aggregate(Sum('shows__price'))
     return render(request,"earnings.html", {'s':d, 'total':total})
 
-def add_shows(request):
-    user = request.user
 
-    if request.method == 'POST':
-        m = request.POST['m']
-        t = request.POST['t']
-        d = request.POST['d']
-        p = request.POST['p']
-        i = user.cinema.pk
-
-        show = Shows(cinema_id = i, movie_id = m, date = d, time = t, price = p)
-        show.save()
-        messages.success(request,'Show Added')
-        return redirect('add_shows')
-
-    else:    
-        m = Movie.objects.all()
-        sh = Shows.objects.filter(cinema=user.cinema)
-        data = {
-            'mov':m,
-            's':sh
-        }
-        return render(request,"add_shows.html", data)
+def logout(request):
+    auth.logout(request)
+    return redirect('/')

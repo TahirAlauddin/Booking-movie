@@ -134,21 +134,21 @@
                                 {% csrf_token %}
                             <div class="form-row justify-content-center">
                                 <div class="col-5">
-                                    <select id="inputState" class="form-control" name="m">
+                                    <select id="inputState" class="form-control" name="movie">
                                         <option>Choose Movie</option>
-                                        {% for list in mov %}
+                                        {% for list in movies %}
                                         <option value="{{list.movie}}">{{ list.movie_name }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
                                 <div class="col-3">
-                                    <input type="date" class="form-control" placeholder="Date" name="d">
+                                    <input type="date" class="form-control" placeholder="Date" name="date">
                                 </div>
                                 <div class="col-2">
-                                    <input type="time" class="form-control" placeholder="Time" name="t">
+                                    <input type="time" class="form-control" placeholder="Time" name="time">
                                 </div>
                                 <div class="col-2">
-                                    <input type="text" class="form-control" placeholder="Ticket Price (Rs)" name="p">
+                                    <input type="text" class="form-control" placeholder="Ticket Price (Rs)" name="price">
                                 </div>
                             </div>
                             <div class="col-3 mt-4">
@@ -182,9 +182,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for list in s %}
+                                {% for list in shows %}
                                     <tr>
-                                        <th scope="row">{{list.shows}}</th>
+                                        <th scope="row">{{list.id}}</th>
                                         <td>{{list.movie.movie_name}}</td>
                                         <td>{{list.time}}</td>
                                         <td>{{list.date}}</td>

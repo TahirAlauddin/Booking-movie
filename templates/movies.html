@@ -129,16 +129,16 @@
                                 <div class="container-fluid">
 
 
-                                    {% for i in cin %}
+                                    {% for cinema in cinemas %}
                                     <div class="row">
                                         <div class="col-12">
-                                            <h3>{{i.cinema_name}}</h3>
+                                            <h3>{{cinema.cinema_name}}</h3>
                                         </div>
                                         <div class="col-12 mb-4">
-                                            {% for j in i.cinema_show.all %}
-                                            {% if j.movie_id == movies.movie %}
-                                            <h5 class="time"><a href="/seat/{{j.shows}}"
-                                                    class="badge badge-primary">{{j.time}}</a></h5>
+                                            {% for show in cinema.cinema_show.all %}
+                                            {% if show.movie_id == movies.movie %}
+                                            <h5 class="time"><a href="/seat/{{show.shows}}"
+                                                    class="badge badge-primary">{{show.time}}</a></h5>
                                             {% endif %}
                                             {% endfor %}
                                         </div>  
@@ -181,12 +181,12 @@
                     </thead>
                     <tbody>
                         <tr>
-                            {% for i in cin %}
-                            <td scope="row"> {{i.cinema_name}} </td>
-                            {% for j in i.cinema_show.all %}
+                            {% for cinema in cinemas %}
+                            <td scope="row"> {{cinema.cinema_name}} </td>
+                            {% for show in cinema.cinema_show.all %}
 
-                            {% if j.movie_id == movies.movie %}
-                            <td><a href="/seat/{{j.shows}}"> {{j.time}} </a></td>
+                            {% if show.movie_id == movies.movie %}
+                            <td><a href="/seat/{{show.shows}}"> {{show.time}} </a></td>
                             {% endif %}
 
                             {% endfor %}

@@ -8,7 +8,7 @@ urlpatterns=[
     path('',views.index,name='index'),
     path('movies/<int:id>',views.movies,name='movies'),
     path('seat/<int:id>',views.seat,name='seat'),
-    path('booked',views.booked,name='booked'),
+    path('booked',views.Booked.as_view(), name='booked'),
     path('ticket/<int:id>',views.ticket,name='ticket'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
