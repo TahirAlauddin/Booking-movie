@@ -13,20 +13,19 @@ def index(request):
     return render(request,"index.html", context)
 
 def movies(request, id):
-    movies = Movie.objects.get(id=id)
-    cinema = Cinema.objects.filter(cinema_show__movie=movies).prefetch_related('cinema_show').distinct()  # get all cinema
+    movie = Movie.objects.get(id=id)
+    cinema = Cinema.objects.filter(cinema_show__movie=movie).prefetch_related('cinema_show').distinct()  # get all cinema
     show = Shows.objects.filter(movie=id)
-    print(movies)
-    print(cinema)
+
     context = {
-        'movies':movies,
+        'movie':movie,
         'show':show,
         'cinemas':cinema,
     }
     return render(request, "movies.html", context )
 
 def seat(request, id):
-    show = Shows.objects.get(shows=id)
+    show = Shows.objects.get(id=id)
     seat = Bookings.objects.filter(shows=id)
     return render(request,"seat.html", {'show':show, 'seat':seat})    
 
@@ -35,6 +34,7 @@ class Booked(View):
         user = request.user
         seat = ','.join(request.POST.getlist('check'))
         show = request.POST['show']
+        print(user, seat, show, sep='\n')
         book = Bookings(useat=seat, shows_id=show, user=user)
         book.save()
         return render(request,"booked.html", {'book':book})  

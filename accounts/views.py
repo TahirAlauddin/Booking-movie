@@ -63,7 +63,7 @@ class RegisterCinema(View):
         password1 = request.POST['password1']
         password2 = request.POST['password2']
 
-        cinema_name = request.POST['cinema']
+        name = request.POST['cinema']
         phone = request.POST['phone']
         city = request.POST['city']
         address = request.POST['address']
@@ -77,7 +77,7 @@ class RegisterCinema(View):
                 
             else:
                 user = User.objects.create_user(username = username, first_name= first_name, last_name= last_name, email=email,password=password1)
-                cin_user = Cinema(cinema_name = cinema_name, phoneno = phone, city = city, address = address, user = user)
+                cin_user = Cinema(name = name, phoneno = phone, city = city, address = address, user = user)
                 cin_user.save()
                 messages.add_message(request, level=SUCCESS, message='User created')
                 
@@ -139,6 +139,12 @@ class AddShows(View):
         price = request.POST['price']
         i = user.cinema.pk
 
+        print(user)
+        print(movie)
+        print(time)
+        print(date)
+        print(price)
+        print(i)
         show = Shows(cinema_id = i, movie_id = movie, date = date, time = time, price = price)
         show.save()
         messages.add_message(request, level=SUCCESS, message='Show Added')
@@ -162,7 +168,7 @@ def bookings(request):
 
 def dashboard(request):
     user = request.user
-    m = Shows.objects.filter(cinema=user.cinema).values('movie','movie__movie_name','movie__movie_poster').distinct()
+    m = Shows.objects.filter(cinema=user.cinema).values('movie','movie__name','movie__poster').distinct()
     print(m)
     return render(request,"dashboard.html", {'list':m})
 

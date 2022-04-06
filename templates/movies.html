@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %}
-<title>BoxOffice | {{movies.movie_name}}</title>
+<title>BoxOffice | {{movies.name}}</title>
 {% endblock %}
 
 {% block style %}
@@ -34,17 +34,17 @@
 <div class="container-fluid">
     <div class="row" style="margin-top: -63px">
         <div class="container"> 
-            <div class=image-holder> <img src="justice-league.jpg" alt="justice-league"> </div>
+            <div class=image-holder> <img src="{{ movie.poster.url }}" alt="justice-league"> </div>
             <div class="status-holder">
-                        <!-- <h1 style="margin-left:100px" class="title">{{movies.movie_name}}</h1> -->
+                        <!-- <h1 style="margin-left:100px" class="title">{{movies.name}}</h1> -->
                         <h1 style="text-align: center;" class="title">Justice League</h1>
-                        <!-- <h4 class="pillow">{{movies.movie_genre}}</h4> -->
+                        <!-- <h4 class="pillow">{{movies.genre}}</h4> -->
                         <h4 class="genre-viewer">Comedy	Action	Romance</h4>
                         <!-- <h4> <i class="fa fa-clock-o" aria-hidden="true"></i> -->
-                            <!-- {{movies.movie_duration}} | <i class="fa fa-calendar-o"></i> {{movies.movie_rdate}} </h4> -->
+                            <!-- {{movies.duration}} | <i class="fa fa-calendar-o"></i> {{movies.rdate}} </h4> -->
                             <h4> <i class="fa fa-clock-o" aria-hidden="true"></i>
                             2hr 45min | <i class="fa fa-calendar-o"></i> 10-12-2022 </h4>
-                        <!-- <p class="desc">{{movies.movie_description}}</p> -->
+                        <!-- <p class="desc">{{movies.description}}</p> -->
                         <p class="desc">This is a good movie. It is going to be on air from this date. This is all I can write.</p>
                         <h3 class="rate"> <i class="fa fa-star gold-star"></i> 9.5 </h1>
                         <button type="button" id="btn-t" class="btn btn-lg btn-custom">Watch Trailer <i
@@ -59,7 +59,7 @@
                 <div class="modal fade" id="trailer" tabindex="-1">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-                            <iframe width="800px" height="500px" src="{{movies.movie_trailer}}"
+                            <iframe width="800px" height="500px" src="{{movies.trailer}}"
                                 allowfullscreen></iframe>
                         </div>
                     </div>
@@ -83,11 +83,11 @@
                                     {% for cinema in cinemas %}
                                     <div class="row">
                                         <div class="col-12">
-                                            <h3>{{cinema.cinema_name}}</h3>
+                                            <h3>{{cinema.name}}</h3>
                                         </div>
                                         <div class="col-12 mb-4">
                                             {% for show in cinema.cinema_show.all %}
-                                            {% if show.movie_id == movies.id %}
+                                            {% if show.id == movie.id %}
                                             <h5 class="time"><a href="/seat/{{show.id}}"
                                                     class="badge badge-primary">{{show.time}}</a></h5>
                                             {% endif %}
@@ -113,10 +113,10 @@
         <div class="row mt-5">
             <div class="col-3">
                 <div class="card">
-                    <img class="card-img-top" src="{{movies.movie_poster.url}}" alt="Card image cap">
+                    <img class="card-img-top" src="{{movies.poster.url}}" alt="Card image cap">
                     <div class="card-body">
-                        <h4 class="card-title">{{movies.movie_name}}</h4>
-                        <p class="card-text">{{movies.movie_rating}}</p>
+                        <h4 class="card-title">{{movies.name}}</h4>
+                        <p class="card-text">{{movies.rating}}</p>
 
                     </div>
                 </div>
@@ -133,10 +133,10 @@
                     <tbody>
                         <tr>
                             {% for cinema in cinemas %}
-                            <td scope="row"> {{cinema.cinema_name}} </td>
+                            <td scope="row"> {{cinema.name}} </td>
                             {% for show in cinema.cinema_show.all %}
 
-                            {% if show.movie_id == movies.movie %}
+                            {% if show.id == movies.movie %}
                             <td><a href="/seat/{{show.shows}}"> {{show.time}} </a></td>
                             {% endif %}
 

@@ -2,14 +2,14 @@
 {% load static %}
 
 {% block title %}
-<title>BoxOffice | {{show.movie.movie_name}} </title>
+<title>BoxOffice | {{show.movie.name}} </title>
 {% endblock %}
 
 {% block style %}
 <link rel="stylesheet" href="{% static "styles/seat.css" %}">
 <style>
   .hall__screen {
-    background-image: url({{show.movie.movie_poster.url}});
+    background-image: url({{show.movie.poster.url}});
   }
 </style>
 {% endblock %}
@@ -17,12 +17,12 @@
 
 <div class="d-none">
   <div class="col-2">
-    <img src="{{show.movie.movie_poster.url}}" height="300px">
+    <img src="{{show.movie.poster.url}}" height="300px">
   </div>
 
   <div class="col-3">
-    <h1 class="display-5"> {{show.movie.movie_name}} </h1>
-    <h1 class="display-5"> {{show.cinema.cinema_name}} </h1>
+    <h1 class="display-5"> {{show.movie.name}} </h1>
+    <h1 class="display-5"> {{show.cinema.name}} </h1>
     <h1 class="display-5"> {{show.time}} </h1>
     <h1 class="display-5"> Rs {{show.price}} </h1>
   </div>
@@ -34,7 +34,7 @@
     <div class="col-12 hall" style="background: linear-gradient(360deg, black, #1f1f1f);">
       <form action="{% url 'booked' %}" method="POST" id="book">
         {% csrf_token %}
-        <input type="hidden" value="{{show.shows}}" name="show" readonly>
+        <input type="hidden" value="{{show.id}}" name="show" readonly>
 
 
         <div class="hall__screen"></div>

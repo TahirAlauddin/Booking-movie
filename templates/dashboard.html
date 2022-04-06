@@ -25,13 +25,13 @@
         </div>
         <div class="row m-3">
             <div class="col-12 card round">
-                    <h5 class="display-4" >Movies Showcasing at {{user.cinema.cinema_name}}</h5><hr>
+                    <h5 class="display-4" >Movies Showcasing at {{user.cinema.name}}</h5><hr>
                     
                     <div class="row p-4">
                         {% for movie in list %}
                         <div class="col-3 poster p-0 shadow card text-center">
-                            <img src="/media/{{movie.movie__movie_poster}}" class="img-fluid" alt="Misisng Poster">
-                            <h5 class="p-3">{{movie.movie__movie_name}}</h5>
+                            <img src="{{ movie.poster.url }}" class="img-fluid" alt="Misisng Poster">
+                            <h5 class="p-3">{{movie.name}}</h5>
                         </div>
                         {% endfor %}
                     </div>

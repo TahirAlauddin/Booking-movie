@@ -14,4 +14,4 @@ urlpatterns=[
     path('dashboard',views.dashboard, name='dashboard'),
     path('add_shows',views.AddShows.as_view(), name='add_shows'),
     path('earnings',views.earnings, name='earnings'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] 

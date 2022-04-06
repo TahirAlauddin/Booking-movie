@@ -25,7 +25,7 @@
         </div>
         <div class="row m-3">
             <div class="col-12 card round">
-                <h5 class="display-4">Add Shows at {{user.cinema.cinema_name}}</h5>
+                <h5 class="display-4">Add Shows at {{user.cinema.name}}</h5>
                 <hr>
 
 
@@ -46,8 +46,8 @@
                                 <div class="col-5">
                                     <select id="inputState" class="form-control" name="movie">
                                         <option>Choose Movie</option>
-                                        {% for list in movies %}
-                                        <option value="{{list.movie}}">{{ list.movie_name }}</option>
+                                        {% for movie in movies %}
+                                        <option value="{{movie.id}}">{{ movie.name }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
@@ -70,15 +70,15 @@
 
                 {% for movie in list %}
                 <div class="col-3 poster p-0 shadow card text-center">
-                    <img src="/media/{{movie.movie__movie_poster}}" class="img-fluid" alt="Misisng Poster">
-                    <h5 class="p-3">{{movie.movie__movie_name}}</h5>
+                    <img src="{{movie.poster.url}}" class="img-fluid" alt="Misisng Poster">
+                    <h5 class="p-3">{{movie.name}}</h5>
                 </div>
                 {% endfor %}
             </div>
 
 
             <div class="col-12 card round mt-2">
-                    <h3 class="">All Shows at {{user.cinema.cinema_name}}</h3>
+                    <h3 class="">All Shows at {{user.cinema.name}}</h3>
                     <hr>
                 
                     <table class="table shadow text-center">
@@ -95,7 +95,7 @@
                                 {% for list in shows %}
                                     <tr>
                                         <th scope="row">{{list.id}}</th>
-                                        <td>{{list.movie.movie_name}}</td>
+                                        <td>{{list.movie.name}}</td>
                                         <td>{{list.time}}</td>
                                         <td>{{list.date}}</td>
                                         <td>Rs. {{list.price}}</td>
