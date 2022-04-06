@@ -6,40 +6,7 @@
 
 {% block style %}
 <style>
-    .bg {
-        background: linear-gradient(to right, rgba(138, 181, 206, 0), #000),
-        url({{movies.movie_poster.url}});
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
-        width: 100%;
-        height: 100vh;
-    }
-
-    .bl {
-        background: black;
-    }
-
-    .right-c {
-        margin-top: 150px;
-        color: #fff;
-    }
-
-    .pillow {
-        background: rgba(0, 0, 0, 0.13);
-        border-radius: 50px;
-        color: white;
-        border: solid 1px whitesmoke;
-        padding: 5px 10px;
-        text-align: center;
-        width: 60%;
-    }
-
-    .title {
-        font-size: 50px;
-        padding: 10px 0px;
-    }
-
+    
     .rate {
         margin: 10px 0px;
         margin-left: 30px;
@@ -54,25 +21,6 @@
         margin: 5px 50px 5px 5px;
     }
 
-    .btn-custom {
-        background: linear-gradient(320deg, blue, red);
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        width: 230px;
-        margin: 5px;
-    }
-
-    .btn-custom i {
-        padding: 0px 5px;
-    }
-
-    .btn-custom:hover {
-        color: #fff;
-        border: solid 2px white;
-        background: transparent;
-    }
-
     .time {
         margin: 5px;
         display: inline;
@@ -85,26 +33,29 @@
 
 <div class="container-fluid">
     <div class="row" style="margin-top: -63px">
-        <div class="col-7 bg">
-
+        <div class="container"> 
+            <div class=image-holder> <img src="justice-league.jpg" alt="justice-league"> </div>
+            <div class="status-holder">
+                        <!-- <h1 style="margin-left:100px" class="title">{{movies.movie_name}}</h1> -->
+                        <h1 style="text-align: center;" class="title">Justice League</h1>
+                        <!-- <h4 class="pillow">{{movies.movie_genre}}</h4> -->
+                        <h4 class="genre-viewer">Comedy	Action	Romance</h4>
+                        <!-- <h4> <i class="fa fa-clock-o" aria-hidden="true"></i> -->
+                            <!-- {{movies.movie_duration}} | <i class="fa fa-calendar-o"></i> {{movies.movie_rdate}} </h4> -->
+                            <h4> <i class="fa fa-clock-o" aria-hidden="true"></i>
+                            2hr 45min | <i class="fa fa-calendar-o"></i> 10-12-2022 </h4>
+                        <!-- <p class="desc">{{movies.movie_description}}</p> -->
+                        <p class="desc">This is a good movie. It is going to be on air from this date. This is all I can write.</p>
+                        <h3 class="rate"> <i class="fa fa-star gold-star"></i> 9.5 </h1>
+                        <button type="button" id="btn-t" class="btn btn-lg btn-custom">Watch Trailer <i
+                                class="fa fa-play-circle"></i>
+                        </button>
+                        <button type="button" id="btn-time" class="btn btn-lg btn-custom">Book Now <i
+                                class="fa fa-ticket"></i>
+                        </button>
+            </div>
+    
         </div>
-        <div class="col-5 bl">
-            <div class="row">
-                <div class="col-12 right-c">
-                    <h1 class="title">{{movies.movie_name}}</h1>
-                    <h4 class="pillow">{{movies.movie_genre}}</h4>
-                    <h4 style="padding: 5px 0px"> <i class="fa fa-clock-o" aria-hidden="true"></i>
-                        {{movies.movie_duration}} | <i class="fa fa-calendar-o"></i> {{movies.movie_rdate}} </h4>
-                    <p class="desc">{{movies.movie_des}}</p>
-                    <h1 class="rate"> <i class="fa fa-heart"></i> {{movies.movie_rating}} </h1>
-                    <button type="button" id="btn-t" class="btn btn-lg btn-custom">Watch Trailer <i
-                            class="fa fa-play-circle"></i>
-                    </button>
-                    <button type="button" id="btn-time" class="btn btn-lg btn-custom">Book Now <i
-                            class="fa fa-ticket"></i> </button>
-
-                </div>
-
                 <div class="modal fade" id="trailer" tabindex="-1">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -136,8 +87,8 @@
                                         </div>
                                         <div class="col-12 mb-4">
                                             {% for show in cinema.cinema_show.all %}
-                                            {% if show.movie_id == movies.movie %}
-                                            <h5 class="time"><a href="/seat/{{show.shows}}"
+                                            {% if show.movie_id == movies.id %}
+                                            <h5 class="time"><a href="/seat/{{show.id}}"
                                                     class="badge badge-primary">{{show.time}}</a></h5>
                                             {% endif %}
                                             {% endfor %}

@@ -13,9 +13,11 @@ def index(request):
     return render(request,"index.html", context)
 
 def movies(request, id):
-    movies = Movie.objects.get(movie=id)
+    movies = Movie.objects.get(id=id)
     cinema = Cinema.objects.filter(cinema_show__movie=movies).prefetch_related('cinema_show').distinct()  # get all cinema
     show = Shows.objects.filter(movie=id)
+    print(movies)
+    print(cinema)
     context = {
         'movies':movies,
         'show':show,
